@@ -31,7 +31,7 @@ app.route('/heroes')
 		res.send(heroes);
 	})
 	 .post(function (req, res) {
-		heroes.push({ id:req.body.id, name:req.body.name});
+		heroes.push(req.body);
 
 		res.send(heroes);
 	})

@@ -31,9 +31,14 @@ app.route('/heroes')
 		res.send(heroes);
 	})
 	 .post(function (req, res) {
-		heroes.push(req.body);
+	 	if (heroes.filter(hero => findHeroById(hero, req.body.id)).length != 0){
+		    res.send("A hero with that id already exists!");
+	    }
+	    else {
+		    heroes.push(req.body);
 
-		res.send(heroes);
+		    res.send(heroes);
+	    }
 	})
 	.delete(function (req, res) {
 		heroes = heroes.filter(hero => !findHeroByName(hero, req.query.name));

@@ -17,11 +17,11 @@ app.route('/heroes')
 	.get(function (req, res) {
 		res.send(heroes.getAllHeroes());
 	})
-	 .post(function (req, res) {
-	    res.send(heroes.addHero(req.body));
+	 .post(function (req, res) {
+	 	res.json({message: heroes.addHero(req.body) });
 	})
 	.delete(function (req, res) {
-		res.send(heroes.deleteHeroByName(req.query.name));
+		res.json({message: heroes.deleteHeroByName(req.query.name) });
 	})
 
 app.route('/heroes/:heroId')
@@ -29,12 +29,19 @@ app.route('/heroes/:heroId')
 		res.send(heroes.getHeroById(req.params.heroId));
 	})
 	.put(function (req, res) {
-		res.send(heroes.updateHeroName(req.params.heroId, req.query.name));
+		res.json({message: heroes.updateHeroName(req.params.heroId, req.query.name) });
 	})
 	.delete(function (req, res) {
-		res.send(heroes.deleteHeroById(req.params.heroId));
+		res.json({message: heroes.deleteHeroById(req.params.heroId) });
 	})
 
-http.listen(3000, function(){
+const httpServer = http.listen(3000, function(){
 	console.log('listening on *:3000');
 });
+
+module.exports = {
+	httpServer:httpServer,
+	setHeroes: (newHeroes) =>{
+		heroes = newHeroes;
+	}
+}

@@ -16,19 +16,24 @@ class heroes{
 	}
 
 	addHero(heroToAdd){
-		if (this.heroes.filter(hero => findHeroById(hero, heroToAdd.id)).length != 0){
-			return "A hero with that id already exists!";
+		if (isValidId(heroToAdd.id)){
+			if (this.heroes.filter(hero => findHeroById(hero, heroToAdd.id)).length != 0){
+				return 'A hero with that id already exists!';
+			}
+			else {
+				this.heroes.push(heroToAdd);
+				return 'Hero added successfully';
+			}
 		}
 		else {
-			this.heroes.push(heroToAdd);
-			return "Hero added successfully";
+			return 'Thats an elegal id!';
 		}
 	}
 
 	updateHeroName(id, name){
 		var hero = this.heroes.find(hero => findHeroById(hero, id));
 
-		if (hero !== null){
+		if (hero){
 			hero.name = name;
 			return 'Hero name updated!';
 		}
@@ -54,11 +59,15 @@ class heroes{
 
 		var newNumOfHeroes = this.heroes.length;
 
-		return numOfHeroes == newNumOfHeroes ? 'There is no hero with that id!' : 'Hero deleted successfully!'
+		return numOfHeroes == newNumOfHeroes ? 'There is no hero with that name!' : 'Hero deleted successfully!'
 	}
 }
 
 module.exports = new heroes();
+
+function isValidId(str) {
+	return /^\+?(0|[1-9]\d*)$/.test(str);
+}
 
 function findHeroById(hero, id) {
 	return hero.id == id;
